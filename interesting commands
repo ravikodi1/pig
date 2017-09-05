@@ -18,3 +18,13 @@ grunt> store a2 into 'college' using org.apache.hive.hcatalog.pig.HCatStorer();
 
 #To HDFS: 
 grunt> store a2 into '/user/horton/college' using PigStorage(',');
+
+#if metadata.dat is where the structure is stored; below can be used to check underlying MR code
+grunt> bash –x pig –f script.pig –param md=$(cat metadata.dat)
+
+#Pig supports dryrun 
+grunt> –dryrun
+
+#In case we want to load a custom schema; its a pain to deal with Pig APIs though
+LOAD ‘<path>’ USING com.example.CustomLoader(‘schema.xml’)
+
