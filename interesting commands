@@ -23,7 +23,10 @@ grunt> store a2 into '/user/horton/college' using PigStorage(',');
 grunt> bash –x pig –f script.pig –param md=$(cat metadata.dat)
 
 #Pig supports dryrun 
-grunt> –dryrun
+If -debug option is specified to pig, it will produce fully substituted pig script in the current working directory named 
+<original name>.substituted
+A -dryrun option will be added to pig in which case no execution is performed and substituted script is produced. 
+We can also use the same option to produce just the execution plan.
 
 #In case we want to load a custom schema; its a pain to deal with Pig APIs though
 LOAD ‘<path>’ USING com.example.CustomLoader(‘schema.xml’)
