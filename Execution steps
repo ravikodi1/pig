@@ -1,0 +1,29 @@
+A C-style preprocessor will be written to perform parameter substitution. The preprocessor will do the following:
+
+Create an empty <original name>.substituted file in the current working directory
+Create parameter hash that maps parameter names to parameter values.
+Read parameters from files in the order they are specified on the command line
+Resolve each parameter:
+search the parameter value for variables that need to be replaced and perform replacement if needed. Generate an error and abort if replacement is needed but the
+correspondent parameter is not found in the parameter hash.
+
+if the parameter value is enclosed in backticks, run the command and capture its stdout. If the command succeeds (returns 0), store the parameter in the hash with the
+value equal to stdout of the command. If the command fails (returns non-0 value), report the error and abort the processing.
+
+if the value is not a command, store it in the parameter hash.
+if this is a duplicate parameter, warn and replace the old value with newly generated one.
+Resolve each command line parameter in the order they are specified on the command line
+use the same resolution steps as for parameters passed in a file
+For each line in the input script
+if comment or empty line, copy over
+if declare line resolve the parameter using the same steps as for parameters passed in a file
+if default line is encountered, the parameter defined is looked up in the parameter hash. If the parameter is not found, processing identical to declare line is
+performed; otherwise, the line is skipped.
+
+for all other lines
+search the line for variables that need to be replaced and perform replacement if needed. Generate an error and abort if replacement is needed but the correspondent
+parameter is not found in the parameter hash. (Reuse the code from the parameter substitution in declare statement.)
+
+place the substituted line into the output file.
+If -dryrun is not specified, pass the output file to grunt to execute. Otherwise, print the name of the file and exit.
+if neither -debug nor -dryrun are specified, remove the output file.
