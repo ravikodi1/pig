@@ -1,0 +1,20 @@
+#to run on tex using hive tables
+pig -x tez -useHCatalog PIGPROGRAM.pig
+
+#From HDFS, file/files in folder with no structure
+grunt> a1 = load 'flightdelay' using PigStorage(',');
+
+#From HDFS, file/files in folder with structure
+grunt> A1 = load 'flightdelays' using PigStorage() AS (year:int,month:int,dayofmonth:int,ArrDely:int,Dest:chararray); -- with structure
+
+#see the structure
+grunt> describe A1;
+
+#From HIVE: 
+grunt> a1 = load 'student' using org.apache.hive.hcatalog.pig.HCatLoader();
+
+#To HIVE: 
+grunt> store a2 into 'college' using org.apache.hive.hcatalog.pig.HCatStorer();
+
+#To HDFS: 
+grunt> store a2 into '/user/horton/college' using PigStorage(',');
